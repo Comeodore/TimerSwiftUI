@@ -9,9 +9,14 @@ import SwiftUI
 
 @main
 struct TimerSwiftUIApp: App {
+    @State var timerViewVM = TimerViewVM()
+    @State var loginViewVM = LoginViewVM()
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            RootView()
         }
+        .environment(timerViewVM)
+        .environment(loginViewVM)
     }
 }
