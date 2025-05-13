@@ -13,7 +13,7 @@ final class User: Codable {
     var name: String
     var isLoggedIn: Bool
     
-    init(name: String, isLoggedIn: Bool = false) {
+    init(name: String = "", isLoggedIn: Bool = false) {
         self.name = name
         self.isLoggedIn = isLoggedIn
     }

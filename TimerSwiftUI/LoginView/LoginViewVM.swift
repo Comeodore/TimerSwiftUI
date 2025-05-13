@@ -13,6 +13,16 @@ final class LoginViewVM {
     var user: User
     
     init() {
-        self.user = User(name: storageManager.userName, isLoggedIn: !storageManager.userName.isEmpty)
+        self.user = StorageManager.shared.fetchData()
+    }
+    
+    func login(userName: String) {
+        user = User(name: userName, isLoggedIn: true)
+        storageManager.saveUser(userName: userName)
+    }
+    
+    func logout() {
+        user.isLoggedIn = false
+        storageManager.deleteUser()
     }
 }

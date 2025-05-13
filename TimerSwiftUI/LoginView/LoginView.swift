@@ -8,10 +8,11 @@
 import SwiftUI
 
 struct LoginView: View {
-    private var storageManager = StorageManager.shared
     
     @Environment(LoginViewVM.self) var loginViewVM
     @State var user = User(name: "")
+    
+    private var storageManager = StorageManager.shared
     
     var body: some View {
         VStack(spacing: 10) {
@@ -23,18 +24,14 @@ struct LoginView: View {
                     .foregroundStyle(user.counterColor)
             }
             .padding()
-            
-            Button(action: saveUser) {
+            Button {
+                loginViewVM.login(userName: user.name)
+            } label: {
                 Label("OK", systemImage: "checkmark.circle")
                     .foregroundStyle(user.countNameCharacters >= 3 ? .blue : .gray)
             }
             .disabled(user.countNameCharacters < 3)
         }
-    }
-    
-    func saveUser() {
-        loginViewVM.user = User(name: user.name, isLoggedIn: true)
-        storageManager.saveUser(userName: user.name)
     }
 }
 

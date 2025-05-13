@@ -10,18 +10,20 @@ import SwiftUI
 final class StorageManager {
     static let shared = StorageManager()
     
-    @AppStorage("userName") var userName = ""
-    @AppStorage("userLoggedIn") var userLoggedIn = false
+    @AppStorage("user") var userData: Data?
     
     private init() {}
     
+    func fetchData() -> User {
+        guard let user = userData else { return User() }
+        return try? JSONDecoder().decode(User.self, from: user)
+    }
+    
     func saveUser(userName: String) {
-        self.userName = userName
-        self.userLoggedIn = true
+        userData = try? JSONEncoder().encode(User(name: userName, isLoggedIn: true))
     }
     
     func deleteUser() {
-        self.userName = ""
-        self.userLoggedIn = false
+        userData = nil
     }
 }

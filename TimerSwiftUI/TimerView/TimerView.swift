@@ -8,10 +8,11 @@
 import SwiftUI
 
 struct TimerView: View {
-    private var storageManager = StorageManager.shared
-    
-    @Environment(TimerViewVM.self) var timerViewVM
+
     @Environment(LoginViewVM.self) var loginViewVM
+    
+    private var timerViewVM = TimerViewVM()
+    private var storageManager = StorageManager.shared
     
     var body: some View {
         VStack {
@@ -28,20 +29,9 @@ struct TimerView: View {
             
             Spacer()
             
-            ButtonView(text: "Log out", color: .blue, action: logout)
+            ButtonView(text: "Log out", color: .blue, action: loginViewVM.logout)
         }
     }
-    
-    func logout() {
-        loginViewVM.user.isLoggedIn = false
-        storageManager.deleteUser()
-    }
-}
-
-#Preview {
-    TimerView()
-        .environment(TimerViewVM())
-        .environment(LoginViewVM())
 }
 
 struct TextView: View {
@@ -70,4 +60,9 @@ struct ButtonView: View {
                 .overlay(RoundedRectangle(cornerRadius: 20).stroke(.black, lineWidth: 4))
         }
     }
+}
+
+#Preview {
+    TimerView()
+        .environment(LoginViewVM())
 }
